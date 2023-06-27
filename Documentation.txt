@@ -1,5 +1,5 @@
 # Labyrinth-Person
-`Note that the key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD”, "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" are to be interpreted as described in RFC 2119.`
+> Note that the key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD”, "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" are to be interpreted as described in RFC 2119.
 
 ## About this project
 A game that requires the player to reach a destination without getting caught by one of the trackers.
@@ -7,8 +7,7 @@ A game that requires the player to reach a destination without getting caught by
 ## Getting started
 To run the application simply compile the project and run the `Labyrinth` file (source `./controller/Labyrinth.java`).
 
-### Important
-`./assets/assets_2.jar` SHOULD be added to the referenced libraries before attempting to compile the code as it contains the textures referenced in `GrahicView.java`.
+> Important: `./assets/assets_2.jar` SHOULD be added to the referenced libraries before attempting to compile the code as it contains the textures referenced in `GrahicView.java`.
 
 ## Controls:
 ### Movement:
