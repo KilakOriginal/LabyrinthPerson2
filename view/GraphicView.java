@@ -40,9 +40,8 @@ public class GraphicView extends JPanel implements View {
 		this.bg = new Rectangle(WIDTH * fieldDimension.width, HEIGHT * fieldDimension.height);
 		this.destination = new Rectangle((destination % width) * this.fieldDimension.width, ((int) destination / width) * this.fieldDimension.height, this.fieldDimension.width / 3, this.fieldDimension.height / 3);
 		this.trackers = new ArrayList<Rectangle>();
-		for (int i = 0; i < difficulty; i++) {
+		for (int i = 0; i < difficulty && i < 3; i++)
 			this.trackers.add(new Rectangle(0, 0));
-		}
 		// Load and buffer textures
 		this.map = map;
 		try {
@@ -51,6 +50,10 @@ public class GraphicView extends JPanel implements View {
 			System.out.println("Unable to load textures. Exiting...");
 			System.exit(-1);
 		}
+	}
+
+	public void addTracker() {
+		this.trackers.add(new Rectangle(0, 0));
 	}
 	
 	/** The background rectangle. */

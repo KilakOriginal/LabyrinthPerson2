@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import view.GraphicView;
 import view.View;
 
 /**
@@ -39,6 +40,7 @@ public class World {
 	/* Count iterations */
 	private int iteration;
 	/** Labyrinth map */
+	private List<Integer> rawMap = new ArrayList<Integer>();
 	private ArrayList<Tile> map = new ArrayList<Tile>();
 	/** Start */
 	private int start;
@@ -59,9 +61,9 @@ public class World {
 		this.height = height;
 		// Load map (easier to implement the pathfinding with tile objects although I would't do this in an actual game)
 		// TODO: Use FileReader instead
-		List<Integer> mapList = Arrays.stream(map.split(",")).map(Integer::parseInt).collect(Collectors.toList());
+		this.rawMap = Arrays.stream(map.split(",")).map(Integer::parseInt).collect(Collectors.toList());
 		for (int i = 0; i < width * height; i++)
-			this.map.add(new Tile(i % width, (int)(i / width), mapList.get(i)));
+			this.map.add(new Tile(i % width, (int)(i / width), this.rawMap.get(i)));
 
 		// Initialise variables
 		this.playerX = start % width;
@@ -74,10 +76,8 @@ public class World {
 		this.running = true;
 
 		// Generate trackers
-		for (int i = 0; i < difficulty && i < 3; i++) {
-			this.trackers.add(new Tracker(3+i, 23));
-			this.trackers.get(i).setMap(this.map, width);
-		}
+		for (int i = 0; i < difficulty && i < 3; i++)
+			this.addTracker(i+3, 23);
 	}
 
 	///////////////////////////////////////////////////////////////////////////
@@ -184,6 +184,15 @@ public class World {
 
 	///////////////////////////////////////////////////////////////////////////
 	// Tracker management
+
+	private void addTracker(int x, int y) {
+		// No idea how to add this to the GraphicView
+		this.trackers.add(new Tracker(x, y));
+		ArrayList<Tile> trackerMap = new ArrayList<Tile>();
+		for (int j = 0; j < width * height; j++) 
+			trackerMap.add(new Tile(j % width, (int)(j / width), this.rawMap.get(j)));
+		this.trackers.get(this.trackers.size()-1).setMap(trackerMap, this.width);
+	}
 	/**
 	 * For each tracker, update the costs of each tile.
 	 */
@@ -272,14 +281,14 @@ public class World {
 		// Value positive or negative?
 		switch (amount >> 31) {
 			case 0:
-				//if ((this.difficulty-1) % 2 == 0)
-				//	this.trackers.add(new Tracker((2 + difficulty + 1) % this.width, 23));
-				this.speed++;
+				if (this.trackers.size() < 3)
+					this.addTracker((2 + difficulty + 1) % this.width, 23);
+				this.speed = Math.min(this.speed+1, 3);
 				break;
 			case -1:
-				//if (this.trackers.size() > 0)
-				//	this.trackers.remove(this.trackers.size() - 1);
-				this.speed--;
+				if (this.trackers.size() > 0)
+					this.trackers.remove(this.trackers.size() - 1);
+				this.speed = Math.max(this.speed-1, 1);
 				break;
 		}
 	}

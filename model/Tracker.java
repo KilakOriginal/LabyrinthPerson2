@@ -90,7 +90,6 @@ public class Tracker {
         this.openList.clear();
         this.checkedTiles.clear();
         this.currentTile = this.map.get(this.x + this.y * this.mapWidth);
-        // No idea how to make a deep copy 
         for (int i = 0; i < this.map.size(); i++)
             this.map.get(i).reset();
     }
