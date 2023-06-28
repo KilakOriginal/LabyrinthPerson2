@@ -265,14 +265,14 @@ public class World {
 				path.add(currentTile.getX() + currentTile.getY() * this.width);
 				currentTile = currentTile.getPredecessor();
 			}
-			tracker.setLocation(path.get(path.size()-1) % this.width, (int)(path.get(path.size()-1) / this.width));
+			if (this.trackers.get(k).getX() != this.playerX || this.trackers.get(k).getY() != this.playerY)
+				tracker.setLocation(path.get(path.size()-1) % this.width, (int)(path.get(path.size()-1) / this.width));
 			path.clear();
 		}
 	}
 
 	/**
 	 * Increases or decreases difficulty.
-	 * As the tracker maps aren't deep copies, the application will no longer work properly with more than one active tracker as they will be accessing the same tiles.
 	 * @param amount
 	 */
 	public void changeDifficulty(int amount) {
